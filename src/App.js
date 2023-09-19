@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import MyFirstComponent from './components/MyFirstComponent';
 import Location from './components/Location';
+import Counter from './components/Counter';
 
 function App() {
   const persona = { name: 'Pablo', lastname: 'Botta', city: 'Córdoba' };
@@ -12,6 +13,8 @@ function App() {
         <p>
           Curso React
         </p>
+        <Counter />
+        <Counter initialValue={100} />
 
         <MyFirstComponent person={persona} job={{ name: 'Profesor' }}>
         </MyFirstComponent>
