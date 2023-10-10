@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { StepInput } from "./StepInput";
 
 export default function Counter ({ initialValue = 0 }) {

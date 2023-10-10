@@ -4,6 +4,7 @@ import Location from './components/Location';
 import Counter from './components/Counter';
 import { useState, useRef, useEffect } from 'react';
 import { TimerWrapper } from './components/TimerWrapper';
+import { TimeContextProvider } from './components/TimeContext';
 
 function App() {
   const [ showTimer, setShowTimer ] = useState(true);
@@ -16,6 +17,8 @@ function App() {
       setUnctrolledText(event.target.value)
     };
   }, []);
+
+
   return (
     <div className="App">
       <header className="App-header">
@@ -23,13 +26,13 @@ function App() {
         <p>
           Curso React
         </p>
-        <button onClick={() => {setShowTimer(!showTimer) }}>Cambiar montaje timer</button>
-        {showTimer &&
-          <TimerWrapper />
-        }
-        <Counter />
-
-        
+        <TimeContextProvider>
+          <button onClick={() => {setShowTimer(!showTimer) }}>Cambiar montaje timer</button>
+          {showTimer &&
+            <TimerWrapper />
+          }
+          <Counter />
+        </TimeContextProvider>
         <Location city={'Rosario'}>
           <div>IZO - 2023</div>
         </Location>

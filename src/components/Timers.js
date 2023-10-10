@@ -1,13 +1,17 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useContext } from "react"
+import { TimeContext } from "./TimeContext";
 
 export default function Timer ({ }) {
     const [ seconds, setSeconds ] = useState(0); // estado interno
     const timerIdRef = useRef(null);
 
+    const [ timeValue, setTimeValue ] = useContext(TimeContext);
+
     const crearTimer = () => {
         timerIdRef.current = setInterval(() => {
             // no puedo leer y escribir el estado en la misma funcion
             setSeconds((_seconds) => _seconds + 1);
+            setTimeValue((_time) => _time + 1);
             console.log('timer de un segundo');
         }, 1000); // funcion que es un sistema externo
     }
