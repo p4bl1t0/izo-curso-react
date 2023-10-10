@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { StepInput } from "./StepInput";
 
 export default function Counter ({ initialValue = 0 }) {
     // initialValue = initialValue || 0;
@@ -10,7 +11,6 @@ export default function Counter ({ initialValue = 0 }) {
     const [ showStep, setShowStep ] = useState(false);
     const [ step, setStep ] = useState(1);
     const [ counter, setCounter ] = useState(initialValue);
-    const inputStepRef = useRef(null);
 
     const onButtonClick = (sumarDoble) => {
         setCounter(function (prevCounter) {
@@ -52,14 +52,6 @@ export default function Counter ({ initialValue = 0 }) {
         setShowStep(newState);
         // el input paso no se renderizó aun como para darle foco
     };
-    const focusButtonHandler = () => { 
-        console.log(inputStepRef.current);
-        if (inputStepRef.current) {
-            // focus es una funcion imperativa
-            inputStepRef.current.focus();
-            // inputStepRef.current representa al objeto document.getElementById('paso')
-        }
-    };
     useEffect(() => {
         console.log('Me ejecuto con el array vacio cuando se monta el componente');
     }, []); // Array vacio como dependencia, se ejecuta solo al inicio, solo cuando se muestra por primera vez el componente (montar)
@@ -67,16 +59,6 @@ export default function Counter ({ initialValue = 0 }) {
         console.log('Me ejecuto con las dependencias = undefined (sin dependecias) cada vez');
     }); // esto se va a ejecutar cada vez que cambie un estado cualquiera del componente
 
-    useEffect(() => {
-        // react va ejecutar este efecto, luego del renderizado ante cada cambio de showStep
-        console.log('me ejecuto ante un cambio de Show Step', showStep);
-        // en este caso el sistema externo es el elemento del DOM input que es imperativo
-        if (inputStepRef.current) {
-            // focus es una funcion imperativa
-            inputStepRef.current.focus();
-            // inputStepRef.current representa al objeto document.getElementById('paso')
-        }
-    }, [showStep]); // [] array vacio, ser undefined
     
     if (isOnline) {
         // VDOM no es DOM ... estamos programando de manera DECLARATIVA los compenentes
@@ -84,17 +66,7 @@ export default function Counter ({ initialValue = 0 }) {
             <div style={{ marginBottom: 25 }}>
                 { jsxRepetitivo }
                 { showStep &&
-                    <>
-                        <label htmlFor="paso">Valor del paso: </label>
-                        {/* input CONTROLADO porque React maneja su estado */}
-                        <input 
-                            id="paso" 
-                            type="number" 
-                            value={step} 
-                            onChange={onStepChange}   
-                            ref={inputStepRef}
-                        />
-                    </>
+                    <StepInput step={step} onStepChange={onStepChange} />
                 }
                 <div>Contador: { counter } / { counter % 2 === 0 ? '(par)' : '(impar)'}</div>
                 { counter < 105 && // true
@@ -109,7 +81,7 @@ export default function Counter ({ initialValue = 0 }) {
                     </div>
                 }
                 <button onClick={showStepButtonHandler}>{ showStep ? 'Ocultar' : 'Mostrar' } step</button>
-                <button onClick={focusButtonHandler}>Dar foco</button>
+            
                 <hr />
             </div>
         )
