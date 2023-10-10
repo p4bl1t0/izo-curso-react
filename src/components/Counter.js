@@ -86,6 +86,7 @@ export default function Counter ({ initialValue = 0 }) {
                 { showStep &&
                     <>
                         <label htmlFor="paso">Valor del paso: </label>
+                        {/* input CONTROLADO porque React maneja su estado */}
                         <input 
                             id="paso" 
                             type="number" 
